@@ -6,19 +6,53 @@ import com.main.ecasa.repository.RoleRepo;
 import com.main.ecasa.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 private final UserRepo userRepo;
 private final RoleRepo roleRepo;
+
+private final PasswordEncoder passwordEncoder;
+
+
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+Appuser appuser =userRepo.findByUsername(username);
+if (appuser==null){
+
+    log.error("User not found in the database:{}",username);
+
+}else {
+    log.info("User found in the database:{}",username);
+}
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+    appuser.getRoles().forEach(role -> {authorities.add(new SimpleGrantedAuthority(role.getName()));
+
+    });
+
+return  new org.springframework.security.core.userdetails.User(appuser.getUsername(),appuser.getPassword(),authorities);
+    }
+
 
     @Override
     public Appuser saveUser(Appuser appuser) {
         log.info("Saving new user {} to database", appuser.getName());
+
+        appuser.setPassword(passwordEncoder.encode(appuser.getPassword()));
+
         return userRepo.save(appuser);
     }
 
@@ -48,4 +82,6 @@ private final RoleRepo roleRepo;
         log.info("Fetching users ");
         return userRepo.findAll();
     }
+
+
 }
