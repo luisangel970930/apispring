@@ -49,10 +49,10 @@ public class Product {
     private String lot;
 
     @ManyToOne @Getter @Setter
-    @JoinColumn(name = "idSection", referencedColumnName = "id_section")
-    private Section section;
+    @JoinColumn(name = "idCategory", referencedColumnName = "id_category")
+    private Category category;
 
-    public Product(long idProduct, String name_product, float size,long count, String color, float price, String fragile, String type_container, String lot, Section section) {
+    public Product(long idProduct, String name_product, float size,long count, String color, float price, String fragile, String type_container, String lot, Category category) {
        super();
         this.idProduct = idProduct;
         this.name_product = name_product;
@@ -63,7 +63,7 @@ public class Product {
         this.fragile = fragile;
         this.type_container = type_container;
         this.lot = lot;
-        this.section = section;
+        this.category = category;
     }
     public Product(long idProduct, String name_product, float size,long count, String color, float price, String fragile, String type_container, String lot) {
   super();

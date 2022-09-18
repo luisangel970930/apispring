@@ -1,9 +1,9 @@
 package com.main.ecasa.service;
 
 import com.main.ecasa.model.Product;
-import com.main.ecasa.model.Section;
+import com.main.ecasa.model.Category;
 import com.main.ecasa.repository.ProductRepo;
-import com.main.ecasa.repository.SectionRepo;
+import com.main.ecasa.repository.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class ProductService {
     @Autowired
-    SectionRepo sectionRepo;
+    CategoryRepo categoryRepo;
 
     @Autowired
     ProductRepo productRepo;
@@ -28,23 +28,23 @@ public class ProductService {
 
     public void addProduct(Product product, Long idSection) {
 
-        Optional<Section> section = sectionRepo.findById(idSection);
+        Optional<Category> section = categoryRepo.findById(idSection);
         if (section.isEmpty()){
         throw  new IllegalStateException("Section with id "+idSection+" does not exits");
 
         }
-        product.setSection(section.get());
+        product.setCategory(section.get());
         productRepo.save(product);
 
     }
 
-    public List<Product> findIdSection(Long idSection) {
-        Optional<Section> section = sectionRepo.findById(idSection);
+    public List<Product> findIdCategory(Long idCategory) {
+        Optional<Category> section = categoryRepo.findById(idCategory);
         if (section.isEmpty()){
-            throw  new IllegalStateException("Section with id "+idSection+" does not exits");
+            throw  new IllegalStateException("Section with id "+idCategory+" does not exits");
 
         }
-        return  productRepo.findBySection_IdSection(idSection);
+        return  productRepo.findByCategory_IdCategory(idCategory);
 
     }
 

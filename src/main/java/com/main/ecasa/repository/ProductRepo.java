@@ -1,7 +1,7 @@
 package com.main.ecasa.repository;
 
 import com.main.ecasa.model.Product;
-import com.main.ecasa.model.Section;
+import com.main.ecasa.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,12 +12,12 @@ import java.util.Optional;
 public interface ProductRepo extends JpaRepository<Product,Long> {
 
 
-    @Query("select p from Product p where p.section = ?1")
-    Optional<Product> findProductBySection(Section section);
+    @Query("select p from Product p where p.category = ?1")
+    Optional<Product> findProductByCategory(Category category);
 
 
-    @Query("select p from Product p where p.section.idSection = ?1")
-   List<Product> findBySection_IdSection(long idSection);
+    @Query("select p from Product p where p.category.idCategory = ?1")
+   List<Product> findByCategory_IdCategory(long idCategory);
 
     @Query("select p from Product p where p.lot = ?1")
     List<Product> findByLot(String lot);

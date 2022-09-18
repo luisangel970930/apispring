@@ -48,12 +48,12 @@ public class ProductController {
             @ApiResponse(code = 500, message = "The server encountered an unexpected condition that prevented it from fulfilling the request."),
             @ApiResponse(code = 400, message = "The server can not or will not process the request due to something that is perceived as a client error (for example, the syntax of the request)") })
 
-  @PostMapping(path = "{idSection}",produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Answer> create (@PathVariable("idSection") Long idSection, @RequestBody Product product){
+  @PostMapping(path = "{idCategory}",produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Answer> create (@PathVariable("idSection") Long idCategory, @RequestBody Product product){
 
       Answer res = new Answer();
       try {
-    productService.addProduct(product,idSection);
+    productService.addProduct(product,idCategory);
 res.setResponse("Successful");
     return new ResponseEntity<Answer>(res, HttpStatus.OK);
 }catch (EntityNotFoundException e){
@@ -70,10 +70,10 @@ res.setResponse("Successful");
             @ApiResponse(code = 500, message = "The server encountered an unexpected condition that prevented it from fulfilling the request."),
 
             @ApiResponse(code = 400, message = "The server can not or will not process the request due to something that is perceived as a client error (for example, the syntax of the request)") })
-   @GetMapping(path = "/section/{idSection}")
-    public  List<Product> findProductSection (@PathVariable("idSection") Long idSection){
+   @GetMapping(path = "/category/{idCategory}")
+    public  List<Product> findProductCategory (@PathVariable("idCategory") Long idCategory){
 
-     return productService.findIdSection(idSection);
+     return productService.findIdCategory(idCategory);
     }
 
     @ApiOperation(value = "Return list of products filtered by lot", notes = "", response = Product.class)

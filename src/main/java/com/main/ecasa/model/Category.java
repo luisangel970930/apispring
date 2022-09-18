@@ -6,20 +6,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity (name = "Section")
 @Table(name = "section")
 @ToString
-public class Section {
+public class Category {
 
     @Id @Getter
-    @Column (name = "id_section",updatable = false ,nullable = false )
+    @Column (name = "id_category",updatable = false ,nullable = false )
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idSection;
+    private long idCategory;
 
-    @Column(name = "name_section" ,nullable = false ) @Getter @Setter
-    private String name_section;
+    @Column(name = "name_category" ,nullable = false ) @Getter @Setter
+    private String name_category;
 
     @Column(name = "area",nullable = false ) @Getter @Setter
     private float area;
@@ -30,14 +29,14 @@ public class Section {
 
 
 
-    public Section(float area, String type_product,String name_section) {
+    public Category(float area, String type_product, String name_category) {
         super();
-        this.name_section=name_section;
+        this.name_category=name_category;
         this.area = area;
         this.type_product = type_product;
     }
 
-    public Section() {
+    public Category() {
         super();
     }
 }
